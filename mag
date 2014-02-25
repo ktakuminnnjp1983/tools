@@ -1,0 +1,27 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]; then
+    echo 'input pattern [suf1] [suf2]'
+    exit -1
+fi
+
+pattern=$1
+shift
+
+sufs=""
+i=0
+for arg in $@; do
+    sufs=${sufs}\\.${arg}\$
+    if [ $i -lt `expr $# - 1` ]; then
+        sufs=${sufs}"|"
+    fi
+    i=`expr $i + 1`
+done
+
+if [ $i -gt 0 ]; then
+    ag -S -G "${sufs}" "${pattern}" --nogroup
+else
+    ag -S "${pattern}" --nogroup
+fi
+
+exit $?
