@@ -1,8 +1,8 @@
-#!/usr/bin/ruby
-
+#!/usr/bin/env ruby
 require "nkf"
 require "csv"
 require "optparse"
+require "rubygems"
 
 Version = "0.0.1"
 banner = "Usage: #{$0} [options] inputFile(csv or excel) outputFile(csv)"
@@ -48,7 +48,8 @@ if sheet
         exit 1
     end
     require "roo"
-    book = Roo::Spreadsheet.open(targetFileName)
+    p targetFileName
+    book = Roo::Excel.new(targetFileName)
     book.default_sheet = book.sheets[sheet]
     targetFileName = name + ".csv"
     book.to_csv(targetFileName)
