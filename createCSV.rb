@@ -62,8 +62,6 @@ if sheet
     book.default_sheet = book.sheets[sheet]
     targetFileName = name + ".csv"
     book.to_csv(targetFileName)
-    # gSubFile(targetFileName, "true", "TRUE")
-    # gSubFile(targetFileName, "false", "FALSE")
     puts "generated #{targetFileName}"
 else
     if targetFileName !~ /\.csv$/
@@ -75,7 +73,6 @@ end
 if convertToUTF8
     s = File.open(targetFileName, "r") {|f| f.read }
     sutf = NKF.nkf("-w -xm0", s)
-    targetFileName = name + "_utf8.csv"
     File.open(targetFileName, "w") {|f| f.write(sutf)}
     puts "generated #{targetFileName}"
 end
